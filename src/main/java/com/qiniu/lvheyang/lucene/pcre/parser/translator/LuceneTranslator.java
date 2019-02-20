@@ -216,8 +216,11 @@ public class LuceneTranslator extends PCREBaseVisitor<Automaton> {
       unions.add(visit(atom));
     }
     if (negate) {
-      return Operations
-          .complement(Operations.union(unions), Operations.DEFAULT_MAX_DETERMINIZED_STATES);
+      return Operations.intersection(
+          Automata.makeAnyChar(),
+          Operations
+              .complement(Operations.union(unions), Operations.DEFAULT_MAX_DETERMINIZED_STATES)
+      );
     }
     return Operations.union(unions);
   }
